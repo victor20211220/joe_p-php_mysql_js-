@@ -2,7 +2,8 @@
 include 'db_connection.php';
 
 error_reporting(0);
-$html_text = '<html><head><meta charset="UTF-8">
+?>
+<html><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script> <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -29,11 +30,11 @@ $html_text = '<html><head><meta charset="UTF-8">
         font-weight: bold;
       }
       .button1 {
-        background-color: white; 
-        color: black; 
+        background-color: white;
+        color: black;
         border: 2px solid #4CAF50;
       }
-      
+
       .button1:hover {
         background-color: #4CAF50;
         color: white;
@@ -43,7 +44,7 @@ $html_text = '<html><head><meta charset="UTF-8">
         margin-top:6px;
         margin-left:5px;
         background-color: white; /* Green */
-        color: black; 
+        color: black;
         border: 2px solid;
         padding : 4px 4px;
         text-align: center;
@@ -55,7 +56,7 @@ $html_text = '<html><head><meta charset="UTF-8">
         font-weight: bold;
         width: 60px;
       }
-    
+
     .tgx {font-weight: bold;border-collapse:collapse;border-spacing:0;color:#FFFFFF;margin-left:0px;margin-right:75px;margin-bottom:30px;}
     .tgx td{font-weight: bold;border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:12px;
     overflow:hidden;padding:5px 2px;word-break:normal;}
@@ -73,13 +74,13 @@ $html_text = '<html><head><meta charset="UTF-8">
     .tg .tg-0lax{text-align:center;vertical-align:top;font-weight: bold;padding-left:5px;padding-right:5px;width:200px;}
     .tg .tg-bookmaker{text-align:center;vertical-align:top;font-weight: bold;width:100px;}
     .tg .tg-val{text-align:center;vertical-align:center;width:60px;color:#000000};
-    
+
 </style>
 <style>
 .input-icon {
     position: relative;
   }
-  
+
   .input-icon > i {
     position: absolute;
     display: block;
@@ -90,7 +91,7 @@ $html_text = '<html><head><meta charset="UTF-8">
     text-align: center;
       font-style: normal;
   }
-  
+
   .input-icon > input {
     padding-left: 25px;
       padding-right: 0;
@@ -99,7 +100,7 @@ $html_text = '<html><head><meta charset="UTF-8">
     font-weight: bold;
     color: #000000;
     width: 123px;
-    } 
+    }
     input[type="number"]:disabled {
         background: #FFFFFF;
       }
@@ -127,18 +128,17 @@ $html_text = '<html><head><meta charset="UTF-8">
   transform: scale(2);
   padding: 10px;
 }
-  
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-';
-echo $html_text;
-
+<?php
 $now_time = strtotime(gmdate("d-m-Y H:i:s", time()))-(4*3600);
 $now_day = strtotime(date("d-m-Y 00:00:00", $now_time));
 $yester_day = strtotime(date("d-m-Y 00:00:00", $now_time-(24*3600)));
 $now_week = strtotime("Monday this week");
+$last_week = strtotime("Last Monday");
 if($now_day<$now_week){
     $now_week = strtotime("Monday last week");
 }
@@ -165,7 +165,7 @@ echo '
         <table class="modal-table">
         <tr>
         <td>Live :</td>
-        <td><input type="checkbox" class="liveCheckbox" id="live1" name="live1" value="1"></input></td>
+        <td><input type="checkbox" class="liveCheckbox" id="live1" name="live1" value="1" /></td>
         </tr>
         <tr>
         <td>Sportsbook :</td>
@@ -236,8 +236,8 @@ echo '
     </div>
   </div>
 </div>';
-
-echo '<div class="buttons"><button class="button button1" data-toggle="modal" data-target="#exampleModalCenter">Add Entry</button>
+		?>
+<div class="buttons"><button class="button button1" data-toggle="modal" data-target="#exampleModalCenter">Add Entry</button>
 
 
 <a id="my-dropdown" href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">MENU</a>
@@ -255,11 +255,11 @@ echo '<div class="buttons"><button class="button button1" data-toggle="modal" da
 </ul>
 
 <br>
-<button class="button button2" onclick="nextPage()">Next</button> 
-<button class="button button2" onclick="previousPage()">Previous</button> 
-</div>';
+<button class="button button2" onclick="nextPage()">Next</button>
+<button class="button button2" onclick="previousPage()">Previous</button>
+</div>
 
-echo '<script>
+<script>
       function doButton(){
         window.open("./report.php");
       }
@@ -317,18 +317,16 @@ echo '<script>
 
       }
 
-      
-</script>';
-$conn = OpenCon();
-$sql = 'SELECT * FROM games ORDER BY Time DESC';
-$result = $conn -> query($sql);
 
-echo '<table class="tgx" style="background-color:#242424;">';
-echo '<tr>
+</script>
+
+<table class="tgx" style="background-color:#242424;">
+<tr>
 <th class="head">Daily Figure</th>
 <th class="head">Pending Bets</th>
 <th class="head">Yesterday Figure</th>
 <th class="head">Weekly Figure</th>
+<th class="head">Last Week Figure</th>
 <th class="head">Monthly Figure</th>
 <th class="head">Year Figure</th>
 <th class="head">Lifetime Figure</th></tr>
@@ -337,12 +335,15 @@ echo '<tr>
 <td class="fig" id="pb"></td>
 <td class="fig" id="ysf"></td>
 <td class="fig" id="wf"></td>
+<td class="fig" id="lwf"></td>
 <td class="fig" id="mf"></td>
 <td class="fig" id="yf"></td>
-<td class="fig" id="lf"></td>';
+<td class="fig" id="lf"></td>
+</tr>
+</table>
 
-echo '<table class="tg" style="background-color:#242424;">';
-echo '<tr>
+<table class="tg" style="background-color:#242424;">
+<tr>
 <th width=3% class="headers">Status</th>
 <th width=10% class="headers">Date</th>
 <th width=5% class="headers">Time of Bet</th>
@@ -358,7 +359,12 @@ echo '<tr>
 <th width=5% class="headers">W/L Amount</th>
 <th width=5% class="headers">Result</th>
 <th width=5% class="headers">Sportsbook</th>
-<th></th></tr>';
+<th></th></tr>
+	<?php
+$conn = OpenCon();
+$sql = 'SELECT * FROM games ORDER BY Time DESC';
+$result = $conn -> query($sql);
+
 $count = 0;
 while($row = $result->fetch_assoc()) {
     $count = $count+1;
@@ -370,7 +376,7 @@ while($row = $result->fetch_assoc()) {
     $date1=DateTime::createFromFormat('Y-m-d H:i:s', $tempDate)->format("m-d-Y");
     $date2=DateTime::createFromFormat('Y-m-d H:i:s', $tempDate)->format("H:i:s");
     // $newformat = $date->format("Y/m/d");
-    
+
     if($row['status'] == 1){
         echo '<tr class="row-'.$count.'" style="background-color:#fff080;" bet-type='.'live'.' data-time='.$date_timestamp.' sqlid='.$sqlID.' odds='.$row['Odds2'].' odds1='.$row['Odds1'].' cat='.$row['Category'].'>';
         echo '<td class="tg-live-'.$count.'" style="background-color:#cc0000;color:#FFFFFF;text-align:center" value="1" onclick="toggleLive(this)">LIVE</td>';}
@@ -387,7 +393,7 @@ while($row = $result->fetch_assoc()) {
     $subcat_arr = array("SIDE","1st Half","2nd Half","Qtrs","Over","Under","NCAA","CFL","WNBA","ATP","WTA","Futures","Props","Teaser","Parlay");
     echo '<td class="tg-val">'.'<select class="subcat-'.$count.'" onchange="detectChange3(this)" style="font-weight: bold;
     color: #000000;">';
-    
+
     foreach ($subcat_arr as $subcat){
         if($row['notes']==$subcat){
             echo '<option value="'.$subcat.'" selected> '.$subcat.'</option>';
@@ -423,7 +429,7 @@ while($row = $result->fetch_assoc()) {
     }
     echo '</select>'.'</td>';
 //########################################################################
-    
+
     echo '<td class="tg-val">'.'<div class="input-icon">
     <input type="number" class="wl-'.$count.'" placeholder="0.00" disabled>
     <i>$</i>
@@ -482,7 +488,7 @@ while($row = $result->fetch_assoc()) {
     // }
     echo '</select></td>';
 
-    
+
     echo '<td class="tg-val"><input type="button" class="del-'.$count.'" value="X" onclick="deleteData(this)"></td>';
     echo '</tr>';
   }
@@ -492,9 +498,11 @@ echo '<div class="totalRows" style="display:none;" value='.$count.'></div>';
 echo '<div class="nowDay" style="display:none;" value='.$now_day.'></div>';
 echo '<div class="yesterDay" style="display:none;" value='.$yester_day.'></div>';
 echo '<div class="nowWeek" style="display:none;" value='.$now_week.'></div>';
+echo '<div class="lastWeek" style="display:none;" value='.$last_week.'></div>';
 echo '<div class="nowMonth" style="display:none;" value='.$now_month.'></div>';
 echo '<div class="nowYear" style="display:none;" value='.$now_year.'></div>';
-$html_text = '<script>
+?>
+<script>
     let curPage = 1;
     let pageSize = 50;
     function previousPage() {
@@ -515,7 +523,7 @@ $html_text = '<script>
             for(let i=1;i<50;i++){
                 document.getElementsByClassName("row-"+i)[0].style.visibility="visible";
             }
-        
+
         }else{
             for(let i=(curPage-1)*pageSize;i<=(curPage)*pageSize;i++){
                 try{
@@ -616,11 +624,11 @@ $html_text = '<script>
         var towin = Number(selected);
         if (odds > 0) { Amount = (towin / ((odds) * (.01))); var CalcA = Amount.toFixed(2); }
         else if (odds < 0) { Amount = ((towin) * ((odds) * (-.01))); var CalcA = Amount.toFixed(2); }
-        
+
         document.getElementsByClassName("risk-"+idx)[0].value = CalcA;
         var result = document.getElementsByClassName("select-"+idx)[0];
         var result_selected = result.options[result.selectedIndex].getAttribute("value");
-        
+
         if(result_selected == 1){
             document.getElementsByClassName("wl-"+idx)[0].value = towin.toFixed(2);
         }else if(result_selected == -1){
@@ -636,10 +644,10 @@ $html_text = '<script>
             //     alert("Bet added!");
             // }
         });
-        
+
         calcFigure();
     }
-    
+
     function loaded(a){
         var className = a.getAttribute("class");
         var idx = className.replace("select-","");
@@ -684,11 +692,11 @@ $html_text = '<script>
         var towin = Number(selected);
         if (odds > 0) { Amount = (towin / ((odds) * (.01))); var CalcA = Amount.toFixed(2); }
         else if (odds < 0) { Amount = ((towin) * ((odds) * (-.01))); var CalcA = Amount.toFixed(2); }
-        
+
         document.getElementsByClassName("risk-"+idx)[0].value = CalcA;
         var result = document.getElementsByClassName("select-"+idx)[0];
         var result_selected = result.options[result.selectedIndex].getAttribute("value");
-        
+
         if(result_selected == 1){
             document.getElementsByClassName("wl-"+idx)[0].value = towin.toFixed(2);
         }else if(result_selected == -1){
@@ -715,7 +723,7 @@ $html_text = '<script>
             console.log(err);
         }
     }
-    
+
     function detectChange3(a){
         var className = a.getAttribute("class");
         var idx = className.replace("subcat-","");
@@ -766,12 +774,14 @@ $html_text = '<script>
         var day = document.getElementsByClassName("nowDay")[0].getAttribute("value");
         var yesterday = document.getElementsByClassName("yesterDay")[0].getAttribute("value");
         var week = document.getElementsByClassName("nowWeek")[0].getAttribute("value");
+        var lastWeek = document.getElementsByClassName("lastWeek")[0].getAttribute("value");
         var month = document.getElementsByClassName("nowMonth")[0].getAttribute("value");
         var year = document.getElementsByClassName("nowYear")[0].getAttribute("value");
         var sumDay = 0;
         var sumPending = 0;
         var sumYesterday = 0;
         var sumWeek = 0;
+        var sumLastWeek = 0;
         var sumMonth = 0;
         var sumYear = 0;
         var sumAll = 0;
@@ -784,6 +794,9 @@ $html_text = '<script>
             }
             if(data_time > week){
                 sumWeek = sumWeek + Number(data_temp);
+            }
+            if(data_time > lastWeek && data_time <= week){ // if datetime is between last Monday and This Monday
+                sumLastWeek += Number(data_temp);
             }
             if(data_time >= yesterday && data_time < day){
                 sumYesterday = sumYesterday + Number(data_temp);
@@ -810,6 +823,8 @@ $html_text = '<script>
         if(sumYesterday<0){document.getElementById("ysf").style.backgroundColor=redcolor;}else{document.getElementById("ysf").style.backgroundColor=bluecolor;}
         document.getElementById("wf").innerHTML = "$  "+sumWeek.toFixed(2);
         if(sumWeek<0){document.getElementById("wf").style.backgroundColor=redcolor;}else{document.getElementById("wf").style.backgroundColor=bluecolor;}
+        document.getElementById("lwf").innerHTML = "$  "+sumLastWeek.toFixed(2);
+        if(sumLastWeek<0){document.getElementById("lwf").style.backgroundColor=redcolor;}else{document.getElementById("lwf").style.backgroundColor=bluecolor;}
         document.getElementById("mf").innerHTML = "$  "+sumMonth.toFixed(2);
         if(sumMonth<0){document.getElementById("mf").style.backgroundColor=redcolor;}else{document.getElementById("mf").style.backgroundColor=bluecolor;}
         document.getElementById("yf").innerHTML = "$  "+sumYear.toFixed(2);
@@ -819,7 +834,7 @@ $html_text = '<script>
     }
 
     $(document).ready(function() {
-        
+
         var table = document.getElementsByClassName("totalRows")[0].getAttribute("value");
         for (let i=1;i<=table;i++){
             // alert(i);
@@ -829,8 +844,5 @@ $html_text = '<script>
         calcFigure();
         renderTable();
     });
-</script>';
-echo $html_text;
-$html_text = '</body></html>';
-echo $html_text;
-?>
+</script>
+</body></html>
